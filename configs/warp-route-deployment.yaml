@@ -1,0 +1,35 @@
+anvilchain1:
+  interchainSecurityModule:
+    modules:
+      - relayer: "0x50b153E01B96276539f962776d3A117CBE562adF"
+        type: trustedRelayerIsm
+      - domains: {}
+        owner: "0x50b153E01B96276539f962776d3A117CBE562adF"
+        type: defaultFallbackRoutingIsm
+    threshold: 1
+    type: staticAggregationIsm
+  isNft: false
+  mailbox: "0x12975173B87F7595EE45dFFb2Ab812ECE596Bf84"
+  owner: "0x50b153E01B96276539f962776d3A117CBE562adF"
+  proxyAdmin:
+    address: "0xeD1DB453C3156Ff3155a97AD217b3087D5Dc5f6E"
+    owner: "0xa0Ee7A142d267C1f36714E4a8F75612F20a79720"
+  type: native
+anvilchain2:
+  interchainSecurityModule:
+    modules:
+      - relayer: "0x50b153E01B96276539f962776d3A117CBE562adF"
+        type: trustedRelayerIsm
+      - domains: {}
+        owner: "0x50b153E01B96276539f962776d3A117CBE562adF"
+        type: defaultFallbackRoutingIsm
+    threshold: 1
+    type: staticAggregationIsm
+  isNft: false
+  mailbox: "0x12975173B87F7595EE45dFFb2Ab812ECE596Bf84"
+  owner: "0x50b153E01B96276539f962776d3A117CBE562adF"
+  proxyAdmin:
+    address: "0xeD1DB453C3156Ff3155a97AD217b3087D5Dc5f6E"
+    owner: "0xa0Ee7A142d267C1f36714E4a8F75612F20a79720"
+  type: native
+

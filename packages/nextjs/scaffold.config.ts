@@ -8,9 +8,50 @@ export type ScaffoldConfig = {
   onlyLocalBurnerWallet: boolean;
 };
 
+type Chain = {
+  id: number;
+  name: string;
+  network: string;
+  nativeCurrency: {
+    name: string;
+    symbol: string;
+    decimals: number;
+  };
+  rpcUrls: {
+    default: { http: string[] };
+  };
+};
+const anvilchain1: Chain = {
+  id: 31337,
+  name: "Anvil Chain 1",
+  network: "anvilchain1",
+  nativeCurrency: {
+    name: "Ethereum",
+    symbol: "ETH",
+    decimals: 18,
+  },
+  rpcUrls: {
+    default: { http: ["http://127.0.0.1:8545"] },
+  },
+};
+
+const anvilchain2: Chain = {
+  id: 31338,
+  name: "Anvil Chain 2",
+  network: "anvilchain2",
+  nativeCurrency: {
+    name: "Ethereum",
+    symbol: "ETH",
+    decimals: 18,
+  },
+  rpcUrls: {
+    default: { http: ["http://127.0.0.1:9545"] },
+  },
+};
+
 const scaffoldConfig = {
   // The networks on which your DApp is live
-  targetNetworks: [chains.foundry],
+  targetNetworks: [chains.foundry], // [anvilchain1, anvilchain2],
 
   // The interval at which your front-end polls the RPC servers for new data
   // it has no effect if you only target the local network (default is 4000)

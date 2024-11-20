@@ -9,6 +9,24 @@ setup-anvil-wallet:
 chain: setup-anvil-wallet
 	anvil
 
+# Setup wallet for Chain 1
+setup-anvil-wallet-1:
+	shx rm ~/.foundry/keystores/scaffold-eth-chain1 2>/dev/null; \
+	cast wallet import --private-key 0x2a871d0798f97d79848a013d4936a73bf4cc922c825d33c1cf7073dff6d409c6 --unsafe-password 'localhost1' scaffold-eth-chain1
+
+# Setup wallet for Chain 2
+setup-anvil-wallet-2:
+	shx rm ~/.foundry/keystores/scaffold-eth-chain2 2>/dev/null; \
+	cast wallet import --private-key 0x8a871d0798f97d79848a013d4936a73bf4cc922c825d33c1cf7073dff6d409c7 --unsafe-password 'localhost2' scaffold-eth-chain2
+
+# Start Chain 1
+chain1: setup-anvil-wallet-1
+	anvil --port 8545 --chain-id 31337 --block-base-fee-per-gas 0
+
+# Start Chain 2
+chain2: setup-anvil-wallet-2
+	anvil --port 9545 --chain-id 31338 --block-base-fee-per-gas 0
+
 # Start a fork
 fork: setup-anvil-wallet
 	anvil --fork-url ${FORK_URL} --chain-id 31337

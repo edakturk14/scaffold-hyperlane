@@ -1,21 +1,14 @@
-# 🏗 Scaffold-ETH 2
+# 🏗 Scaffold-Hyperlane
 
-<h4 align="center">
-  <a href="https://docs.scaffoldeth.io">Documentation</a> |
-  <a href="https://scaffoldeth.io">Website</a>
-</h4>
+Scaffold-ETH 2 meets Hyperlane, enabling developers to build cross-chain applications with seamless messaging and asset bridging.
 
-🧪 An open-source, up-to-date toolkit for building decentralized applications (dapps) on the Ethereum blockchain. It's designed to make it easier for developers to create and deploy smart contracts and build user interfaces that interact with those contracts.
+With Hyperlane integration, you can:
 
-⚙️ Built using NextJS, RainbowKit, Foundry, Wagmi, Viem, and Typescript.
+- Deploy Hyperlane core contracts on multiple chains.
+- Use Warp Routes to transfer assets (e.g., ETH or ERC20 tokens) between chains.
+- Test cross-chain messaging locally with minimal setup.
 
-- ✅ **Contract Hot Reload**: Your frontend auto-adapts to your smart contract as you edit it.
-- 🪝 **[Custom hooks](https://docs.scaffoldeth.io/hooks/)**: Collection of React hooks wrapper around [wagmi](https://wagmi.sh/) to simplify interactions with smart contracts with typescript autocompletion.
-- 🧱 [**Components**](https://docs.scaffoldeth.io/components/): Collection of common web3 components to quickly build your frontend.
-- 🔥 **Burner Wallet & Local Faucet**: Quickly test your application with a burner wallet and local faucet.
-- 🔐 **Integration with Wallet Providers**: Connect to different wallet providers and interact with the Ethereum network.
-
-![Debug Contracts tab](https://github.com/scaffold-eth/scaffold-eth-2/assets/55535804/b237af0c-5027-4849-a5c1-2e31495cccb1)
+For general Scaffold-ETH 2 features and usage, visit the original documentation.
 
 ## Requirements
 
@@ -24,57 +17,67 @@ Before you begin, you need to install the following tools:
 - [Node (>= v18.18)](https://nodejs.org/en/download/)
 - Yarn ([v1](https://classic.yarnpkg.com/en/docs/install/) or [v2+](https://yarnpkg.com/getting-started/install))
 - [Git](https://git-scm.com/downloads)
+- Hyperlane CLI: Install with:
+  ```
+  npm install -g @hyperlane-xyz/cli
+  ```
 
-## Quickstart
+## Quickstart: Scaffold-ETH 2 with Hyperlane
 
-To get started with Scaffold-ETH 2, follow the steps below:
+1. Set Up Local Chains
 
-1. Install dependencies if it was skipped in CLI:
+   Run two local Ethereum chains using Foundry:
 
-```
-cd my-dapp-example
-yarn install
-```
+   - Start the first chain:
 
-2. Run a local network in the first terminal:
+   ```
+   yarn chain:1
+   This runs on http://localhost:8545 with Chain ID 31337.
+   ```
 
-```
-yarn chain
-```
+   - Start the second chain:
 
-This command starts a local Ethereum network using Foundry. The network runs on your local machine and can be used for testing and development. You can customize the network configuration in `packages/foundry/foundry.toml`.
+   ```
+   yarn chain:2
+   This runs on http://localhost:9545 with Chain ID 31338.
+   ```
 
-3. On a second terminal, deploy the test contract:
+2. Add Chains to the Hyperlane Registry
 
-```
-yarn deploy
-```
+   Register the chains with Hyperlane to make them recognizable for cross-chain messaging:
 
-This command deploys a test smart contract to the local network. The contract is located in `packages/foundry/contracts` and can be modified to suit your needs. The `yarn deploy` command uses the deploy script located in `packages/foundry/script` to deploy the contract to the network. You can also customize the deploy script.
+   ```
+   hyperlane registry init
+   ```
 
-4. On a third terminal, start your NextJS app:
+   Provide the following details when prompted:
 
-```
-yarn start
-```
+   - Chain 1:
+     Name: anvilchain1
+     RPC URL: http://localhost:8545
+     Chain ID: 31337
+     Native Token: ETH with 18 decimals.
+   - Chain 2:
+     Name: anvilchain2
+     RPC URL: http://localhost:9545
+     Chain ID: 31338
+     Native Token: ETH with 18 decimals.
 
-Visit your app on: `http://localhost:3000`. You can interact with your smart contract using the `Debug Contracts` page. You can tweak the app config in `packages/nextjs/scaffold.config.ts`.
+3. Deploy Hyperlane Core Contracts
 
-Run smart contract test with `yarn foundry:test`
+   Deploy the Mailbox and ISM contracts to enable cross-chain messaging:
 
-- Edit your smart contracts in `packages/foundry/contracts`
-- Edit your frontend homepage at `packages/nextjs/app/page.tsx`. For guidance on [routing](https://nextjs.org/docs/app/building-your-application/routing/defining-routes) and configuring [pages/layouts](https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts) checkout the Next.js documentation.
-- Edit your deployment scripts in `packages/foundry/script`
+   ```
+   hyperlane core init
+   hyperlane core deploy
+   ```
 
+   Select the chains (anvilchain1 and anvilchain2) when prompted.
+   Check the deployed contract addresses in ~/.hyperlane/chains/<chain_name>/addresses.yaml.
 
-## Documentation
+4. Test Cross-Chain Messaging
+   Verify the core contracts by sending a test message:
 
-Visit our [docs](https://docs.scaffoldeth.io) to learn how to start building with Scaffold-ETH 2.
-
-To know more about its features, check out our [website](https://scaffoldeth.io).
-
-## Contributing to Scaffold-ETH 2
-
-We welcome contributions to Scaffold-ETH 2!
-
-Please see [CONTRIBUTING.MD](https://github.com/scaffold-eth/scaffold-eth-2/blob/main/CONTRIBUTING.md) for more information and guidelines for contributing to Scaffold-ETH 2.
+   ```
+   hyperlane send message --relay
+   ```
